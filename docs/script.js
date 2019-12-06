@@ -33,13 +33,18 @@ async function run() {
   const data = new MnistData();
   await data.load();
   await showExamples(data);
+//add for part 6    
 const model = getModel();
 tfvis.show.modelSummary({name: 'Model Architecture'}, model);
   
 await train(model, data);
+//end for part 6
+    
+    //begin part 7
+    await showAccuracy(model, data);
+await showConfusion(model, data);
+    //end part 7
 }
-
-document.addEventListener('DOMContentLoaded', run);
 
 function getModel() {
   const model = tf.sequential();
@@ -101,6 +106,8 @@ function getModel() {
 
   return model;
 }
+
+//add for part 6
 async function train(model, data) {
   const metrics = ['loss', 'val_loss', 'acc', 'val_acc'];
   const container = {
@@ -136,7 +143,10 @@ async function train(model, data) {
     callbacks: fitCallbacks
   });
 }
+//end for part 6
 
+
+//part 7 begin
 const classNames = ['Zero', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine'];
 
 function doPrediction(model, data, testDataSize = 500) {
@@ -170,3 +180,7 @@ async function showConfusion(model, data) {
 
   labels.dispose();
 }
+//end of part 7
+
+document.addEventListener('DOMContentLoaded', run);
+
